@@ -13,7 +13,7 @@ board.on('ready', () => {
   });
   const servo = new Servo(10);
 
-  const minDeg = 35;
+  const minDeg = 55;
   const maxDeg = 125;
 
   // servo.degreeRange([maxLeftDeg, maxRightDeg]);
@@ -25,7 +25,7 @@ board.on('ready', () => {
 
   let servoChange = servo.position;
 
-  servo.center();
+  servo.center(500);
   // just to make sure the program is running
   led.blink(500);
   function controller(_, key) {
@@ -44,12 +44,12 @@ board.on('ready', () => {
             motorChange = esc.neutral;
           } else if (key.name === 'w') {
             console.log('HARD START');
-            motorChange = 1620;
+            motorChange = 1380;
           } else {
             speedIncrement = 1;
 
             motorChange =
-              key.name === 'up' ? motorChange += speedIncrement : motorChange -= speedIncrement;
+              key.name === 'up' ? motorChange -= speedIncrement : motorChange += speedIncrement;
 
             console.log("CURRENT SPEED: ", motorChange)
           }
@@ -60,7 +60,11 @@ board.on('ready', () => {
         if (key.name === 'left' || key.name === 'right') {
           console.log("TURNING: ", key.name);
 
-          const incrementVal = 15;
+          const incrementVal = 5;
+          if (servoChange < minDeg || servoChange > maxDeg) {
+            servoChange = servo.position;
+          }
+
           if (key.name === 'left' && servoChange >= minDeg) {
             servoChange = servo.position - incrementVal
           } else if (key.name === 'right' && servoChange <= maxDeg) {
@@ -76,15 +80,16 @@ board.on('ready', () => {
 
         if (key.name === 'a') {
           console.log("HARD LEFT");
-          servo.to(minDeg, 250)
+          servo.to(minDeg, 1000)
         }
         if (key.name === 'd') {
           console.log("HARD RIGHT");
-          servo.to(maxDeg, 250)
+          servo.to(maxDeg, 1000)
         }
 
         if (key.name === 'e') {
-          servo.center();
+          console.log('CENTERED');
+          servo.center(500);
           servoChange = servo.position
         }
       }
