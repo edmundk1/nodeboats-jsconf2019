@@ -1,0 +1,10 @@
+{
+  "name": "nodeboat",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "johnny-five": "1.3.0"
+  }
+}
