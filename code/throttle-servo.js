@@ -13,8 +13,8 @@ board.on('ready', () => {
   });
   const servo = new Servo(10);
 
-  const minDeg = 55;
-  const maxDeg = 125;
+  const minDeg = 45;
+  const maxDeg = 135;
 
   // servo.degreeRange([maxLeftDeg, maxRightDeg]);
 
@@ -26,7 +26,7 @@ board.on('ready', () => {
   let servoChange = servo.position;
 
   servo.center(500);
-  // just to make sure the program is running
+  // just to make sureE the program is running
   led.blink(500);
   function controller(_, key) {
 
@@ -66,9 +66,9 @@ board.on('ready', () => {
           }
 
           if (key.name === 'left' && servoChange >= minDeg) {
-            servoChange = servo.position - incrementVal
-          } else if (key.name === 'right' && servoChange <= maxDeg) {
             servoChange = servo.position + incrementVal
+          } else if (key.name === 'right' && servoChange <= maxDeg) {
+            servoChange = servo.position - incrementVal
           } else {
             console.log("MAX DEG LIMIT REACHED")
           }
@@ -80,16 +80,17 @@ board.on('ready', () => {
 
         if (key.name === 'a') {
           console.log("HARD LEFT");
-          servo.to(minDeg, 1000)
+          servo.to(maxDeg, 1000)
         }
         if (key.name === 'd') {
           console.log("HARD RIGHT");
-          servo.to(maxDeg, 1000)
+          servo.to(minDeg, 1000)
         }
 
         if (key.name === 'e') {
           console.log('CENTERED');
-          servo.center(500);
+          // servo.center(500);
+          servo.to(70, 500)
           servoChange = servo.position
         }
       }
